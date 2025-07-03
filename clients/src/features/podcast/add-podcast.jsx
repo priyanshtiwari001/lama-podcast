@@ -15,7 +15,6 @@ const AddPodcast = () => {
   const [podcastInput, setPodcastInput] = useState("");
   const [transcriptInput, setTranscriptInput] = useState("");
   const { projectId } = useParams();
-  const navigate = useNavigate();
 
   const getPodcasts = useCallback(async () => {
     setLoading(true);
@@ -45,7 +44,7 @@ const AddPodcast = () => {
 
   useEffect(() => {
     getPodcasts();
-  }, [getPodcasts]);
+  }, []);
 
   const createPodcast = async (e) => {
     e.preventDefault();
@@ -68,7 +67,7 @@ const AddPodcast = () => {
         setPodcastInput("");
         setTranscriptInput("");
         setIsModalOpen(false);
-        await getPodcasts(); 
+         await getPodcasts(); 
       }
     } catch (error) {
       console.error("Error creating podcast:", error);
@@ -95,7 +94,7 @@ const AddPodcast = () => {
         ) : podcastLists.length === 0 ? (
           <UploadButton modalOpen={setIsModalOpen} />
         ) : (
-          <PodcastTable podcastLists={podcastLists} />
+          <PodcastTable getPodcasts={getPodcasts} podcastLists={podcastLists} />
         )}
       </div>
 

@@ -30,7 +30,7 @@ const ProjectDashboard = () => {
       if (response.status === 201) {
         setProjectInput("");
         setIsOpen(false);
-        navigate(0);
+        await getProjects()
          alert("Project is created");
       }
     } catch (error) {

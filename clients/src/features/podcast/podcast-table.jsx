@@ -1,20 +1,16 @@
 import axiosInstance from '@/utils/axios-instance';
 import { formatDate } from '@/utils/helper';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 
-const PodcastTable = ({podcastLists}) => {
+const PodcastTable = ({podcastLists,getPodcasts}) => {
     const navigate = useNavigate();
   const deletePodcast = (async (podcastId) => {
     try {
       const response = await axiosInstance.delete(
         `/projects/${podcastId}/podcast`
       );
-      if (response.status === 200) {
-          alert("podcast is deleted");
-          navigate(0)
-        }
     } catch (error) {
       console.log("Error fetching podcasts:", error);
 
@@ -32,8 +28,6 @@ const PodcastTable = ({podcastLists}) => {
         } else {
           alert("Something went wrong. Please try again.");
         }
-      } else {
-        alert("Network error. Please check your internet connection.");
       }
     }
   })
@@ -44,6 +38,9 @@ const PodcastTable = ({podcastLists}) => {
     const selectedPodcast = podcastLists[i];
     if(selectedPodcast && selectedPodcast._id){
       await deletePodcast(selectedPodcast._id);
+       alert("podcast is deleted"); 
+       getPodcasts();
+       
     }
   }
 
